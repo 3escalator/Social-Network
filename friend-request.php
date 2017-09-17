@@ -21,7 +21,7 @@ if($result->num_rows > 0) {
   }
 }
 
-$_SESSION['callFrom'] = "friends.php";
+$_SESSION['callFrom'] = "friend-request.php";
 
 ?>
 <!DOCTYPE html>
@@ -68,7 +68,7 @@ $_SESSION['callFrom'] = "friends.php";
 
   <section class="content-header">
       <h1>
-        Friends
+        Friend Request
       </h1>
     </section>
 
@@ -79,11 +79,17 @@ $_SESSION['callFrom'] = "friends.php";
         <div class="col-md-12">
 
         <?php
-        $sql = "SELECT * FROM users WHERE id_user <> '$_SESSION[id_user]'"; // <>   != 
+        $sql = "SELECT * FROM friendrequest WHERE id_user = '$_SESSION[id_user]'"; 
           $result = $conn->query($sql);
 
           if($result->num_rows > 0) { 
-            while($row = $result->fetch_assoc()) {
+            while($row1 = $result->fetch_assoc()) {
+
+              $sql1 = "SELECT * FROM users WHERE id_user = '$row1[id_friend]'"; 
+              $result1 = $conn->query($sql1);
+
+              if($result1->num_rows > 0) { 
+                while($row = $result1->fetch_assoc()) {
                         
         ?>
           <div class="box box-widget widget-user">
@@ -114,32 +120,11 @@ $_SESSION['callFrom'] = "friends.php";
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4">
-                <?php
-                $sql1 = "SELECT * FROM friends WHERE id_user='$_SESSION[id_user]' AND id_frienduser='$row[id_user]'";
-                  $result1 = $conn->query($sql1);
-
-                  if($result1->num_rows > 0) { 
-                                
-                ?>
-                  <div class="description-block">
-                    <a href="remove-friend.php?id=<?php echo $row['id_user']; ?>" class="btn bg-orange bg-flat">Remove Friend</a>
-                  </div>
-                <?php 
-                  } else {
-                    $sql2 = "SELECT * FROM friendrequest WHERE id_user='$row[id_user]' AND id_friend='$_SESSION[id_user]'";
-                    $result2 = $conn->query($sql2);
-
-                    if($result2->num_rows == 0) { 
-                    ?>
+                
                     <div class="description-block">
-                      <a href="send-request.php?id=<?php echo $row['id_user']; ?>" class="btn bg-green bg-flat">Add Friend</a>
-                    </div>
-                    <?php } else {?>
-                    <div class="description-block">
-                      <button class="btn bg-purple bg-flat" disabled>Request Sent</button>
+                      <a href="accept-request.php?id=<?php echo $row['id_user']; ?>" class="btn bg-green bg-flat">Accept Friend</a>
                     </div>
                     
-                  <?php } } ?>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
@@ -149,6 +134,8 @@ $_SESSION['callFrom'] = "friends.php";
           </div>
         <?php
             }
+            }
+          }
           }
         ?>
           
