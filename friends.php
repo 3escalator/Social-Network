@@ -108,7 +108,7 @@ $_SESSION['callFrom'] = "friends.php";
                 <!-- /.col -->
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <button class="btn bg-maroon bg-flat">View Profile</button>
+                    <a href="view-profile.php?id=<?php echo $row['id_user']; ?>" class="btn bg-maroon bg-flat">View Profile</a>
                   </div>
                   <!-- /.description-block -->
                 </div>

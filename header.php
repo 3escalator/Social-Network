@@ -160,9 +160,10 @@
                   } else {
                      echo '<img src="dist/img/avatar5.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">';
                   }
+                  $username = $row['name'];
                 }
                 ?>
-              <span class="hidden-xs"><?php echo $name; ?></span>
+              <span class="hidden-xs"><?php echo $username; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
