@@ -22,6 +22,8 @@ Social Network Using PHP - Part-8 - Friend Request - https://youtu.be/MIlYWV5SsD
 
 Social Network Using PHP - Part-9 - Friends Profile - https://youtu.be/Jc-wZsCkEP4
 
+Social Network Using PHP - Part-10 - Friends Messaging - https://youtu.be/VLLXobXWFqM
+
 # Theme
 
 Download Theme (Without PHP Code) From - http://learningfromscratch.online/download/social-network-theme/

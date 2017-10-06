@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2017 at 06:12 PM
+-- Generation Time: Oct 06, 2017 at 07:41 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -77,13 +77,6 @@ CREATE TABLE `friendrequest` (
   `id_friend` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `friendrequest`
---
-
-INSERT INTO `friendrequest` (`id_friendrequest`, `id_user`, `id_friend`) VALUES
-(5, 13, 15);
-
 -- --------------------------------------------------------
 
 --
@@ -102,7 +95,9 @@ CREATE TABLE `friends` (
 
 INSERT INTO `friends` (`id_friend`, `id_user`, `id_frienduser`) VALUES
 (5, 13, 15),
-(6, 15, 13);
+(6, 15, 13),
+(9, 14, 13),
+(10, 13, 14);
 
 -- --------------------------------------------------------
 
@@ -156,6 +151,28 @@ INSERT INTO `likes` (`id_likes`, `id_user`, `id_post`, `liked`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id_message` int(11) NOT NULL,
+  `id_from` int(11) NOT NULL,
+  `id_to` int(11) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id_message`, `id_from`, `id_to`, `message`, `createdAt`) VALUES
+(1, 15, 13, 'Testing Message 1', '2017-10-06 15:54:24'),
+(2, 13, 15, 'testing message2', '2017-10-06 15:54:52');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `post`
 --
 
@@ -198,17 +215,18 @@ CREATE TABLE `users` (
   `country` varchar(255) DEFAULT NULL,
   `skills` text,
   `aboutme` text,
-  `profileimage` varchar(255) DEFAULT NULL
+  `profileimage` varchar(255) DEFAULT NULL,
+  `online` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `createdAt`, `designation`, `degree`, `university`, `city`, `country`, `skills`, `aboutme`, `profileimage`) VALUES
-(13, 'John Smith', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59ad28c885f9c.png'),
-(14, 'XYZ', 'test2@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59ad28c885f9c.png'),
-(15, 'BCD', 'test1@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59ad28c885f9c.png');
+INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `createdAt`, `designation`, `degree`, `university`, `city`, `country`, `skills`, `aboutme`, `profileimage`, `online`) VALUES
+(13, 'John Smith', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 0),
+(14, 'XYZ', 'test2@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59ad28c885f9c.png', 0),
+(15, 'BCD', 'test1@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 1);
 
 --
 -- Indexes for dumped tables
@@ -245,6 +263,12 @@ ALTER TABLE `likes`
   ADD PRIMARY KEY (`id_likes`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id_message`);
+
+--
 -- Indexes for table `post`
 --
 ALTER TABLE `post`
@@ -274,7 +298,7 @@ ALTER TABLE `friendrequest`
 -- AUTO_INCREMENT for table `friends`
 --
 ALTER TABLE `friends`
-  MODIFY `id_friend` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_friend` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `friend_posts`
 --
@@ -285,6 +309,11 @@ ALTER TABLE `friend_posts`
 --
 ALTER TABLE `likes`
   MODIFY `id_likes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id_message` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `post`
 --

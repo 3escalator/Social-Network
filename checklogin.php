@@ -17,6 +17,9 @@ if(isset($_POST)) {
 	if($result->num_rows > 0) {
 		$row = $result->fetch_assoc();
 
+		$sql1 = "UPDATE users SET online='1' WHERE id_user='$row[id_user]'";
+		$conn->query($sql1);
+
 		$_SESSION['id_user'] = $row['id_user'];
 		$_SESSION['name'] = $row['name'];
 

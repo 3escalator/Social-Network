@@ -236,63 +236,71 @@ $_SESSION['callFrom'] = "index.php";
 
         <div class="col-md-4">
           <!-- USERS LIST -->
+          <?php
+                $sql1 = "SELECT * FROM friends INNER JOIN users ON friends.id_frienduser=users.id_user WHERE friends.id_user='$_SESSION[id_user]' AND users.online='1'";
+                  $result1 = $conn->query($sql1);
+
+                  if($result1->num_rows > 0) { 
+                ?>
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">My Friends</h3>
-
+              <h3 class="box-title">My Online Friends</h3>
+              
               <div class="box-tools pull-right">
-                <span class="label label-success">10 Online</span>
+                <span class="label label-success"><?php echo $result1->num_rows; ?> Online</span>
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
               <ul class="users-list clearfix">
+                
+
+                <?php
+                      while($row = $result1->fetch_assoc()) {
+                ?>
                 <li>
-                  <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Alexander Pierce</a>
-                  <span class="users-list-date">Today</span>
+                  <img src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                  <a class="users-list-name" href="view-profile.php?id=<?php echo $row['id_user']; ?>"><?php echo $row['name']; ?></a>
                 </li>
-                <li>
-                  <img src="dist/img/user8-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Norman</a>
-                  <span class="users-list-date">Yesterday</span>
-                </li>
-                <li>
-                  <img src="dist/img/user7-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Jane</a>
-                  <span class="users-list-date">12 Jan</span>
-                </li>
-                <li>
-                  <img src="dist/img/user6-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">John</a>
-                  <span class="users-list-date">12 Jan</span>
-                </li>
-                <li>
-                  <img src="dist/img/user2-160x160.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Alexander</a>
-                  <span class="users-list-date">13 Jan</span>
-                </li>
-                <li>
-                  <img src="dist/img/user5-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Sarah</a>
-                  <span class="users-list-date">14 Jan</span>
-                </li>
-                <li>
-                  <img src="dist/img/user4-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Nora</a>
-                  <span class="users-list-date">15 Jan</span>
-                </li>
-                <li>
-                  <img src="dist/img/user3-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Nadia</a>
-                  <span class="users-list-date">15 Jan</span>
-                </li>
+                <?php } ?>
               </ul>
               <!-- /.users-list -->
             </div>
             <!-- /.box-body -->
             <div class="box-footer text-center">
-              <a href="javascript:void(0)" class="uppercase">View All Users</a>
+              <a href="friends.php" class="uppercase">View All Users</a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!--/.box -->
+        <?php } ?>
+          <!-- USERS LIST -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">All Friends</h3>
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="users-list clearfix">
+                <?php
+                $sql1 = "SELECT * FROM friends INNER JOIN users ON friends.id_frienduser=users.id_user WHERE friends.id_user='$_SESSION[id_user]'";
+                  $result1 = $conn->query($sql1);
+
+                  if($result1->num_rows > 0) { 
+                      while($row = $result1->fetch_assoc()) {
+                ?>
+                <li>
+                  <img src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                  <a class="users-list-name" href="view-profile.php?id=<?php echo $row['id_user']; ?>"><?php echo $row['name']; ?></a>
+                </li>
+                <?php } } ?>
+              </ul>
+              <!-- /.users-list -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-center">
+              <a href="friends.php" class="uppercase">View All Users</a>
             </div>
             <!-- /.box-footer -->
           </div>

@@ -21,6 +21,8 @@ if($result->num_rows > 0) {
   }
 }
 
+$_SESSION['callFrom'] = "messages.php";
+
 
 ?>
 <!DOCTYPE html>
@@ -77,12 +79,22 @@ if($result->num_rows > 0) {
       <div class="row">
         <div class="col-md-12">
           <!-- DIRECT CHAT -->
-              <div class="box box-warning direct-chat direct-chat-warning">
+              <div id="chatButton" class="box box-warning direct-chat direct-chat-warning">
                 <div class="box-header with-border">
                   <h3 class="box-title">Messenger</h3>
 
                   <div class="box-tools pull-right">
-                    <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                    <?php
+                    $sql1 = "SELECT * FROM friends INNER JOIN users ON friends.id_frienduser=users.id_user WHERE friends.id_user='$_SESSION[id_user]'";
+                      $result1 = $conn->query($sql1);
+
+                      if($result1->num_rows > 0) { 
+                        $totalno = $result1->num_rows;
+                      } else {
+                        $totalno = 0;
+                      }
+                    ?>
+                    <span data-toggle="tooltip" title="Total Contacts" class="badge bg-yellow"><?php echo $totalno; ?></span>
                     <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
                             data-widget="chat-pane-toggle">
                       <i class="fa fa-comments"></i></button>
@@ -91,70 +103,8 @@ if($result->num_rows > 0) {
                 <!-- /.box-header -->
                 <div class="box-body">
                   <!-- Conversations are loaded here -->
-                  <div class="direct-chat-messages">
-                    <!-- Message. Default to the left -->
-                    <div class="direct-chat-msg">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-left">Alexander Pierce</span>
-                        <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                      </div>
-                      <!-- /.direct-chat-info -->
-                      <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                      <!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        Is this template really for free? That's unbelievable!
-                      </div>
-                      <!-- /.direct-chat-text -->
-                    </div>
-                    <!-- /.direct-chat-msg -->
-
-                    <!-- Message to the right -->
-                    <div class="direct-chat-msg right">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-right">Sarah Bullock</span>
-                        <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
-                      </div>
-                      <!-- /.direct-chat-info -->
-                      <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                      <!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        You better believe it!
-                      </div>
-                      <!-- /.direct-chat-text -->
-                    </div>
-                    <!-- /.direct-chat-msg -->
-
-                    <!-- Message. Default to the left -->
-                    <div class="direct-chat-msg">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-left">Alexander Pierce</span>
-                        <span class="direct-chat-timestamp pull-right">23 Jan 5:37 pm</span>
-                      </div>
-                      <!-- /.direct-chat-info -->
-                      <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                      <!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        Working with AdminLTE on a great new app! Wanna join?
-                      </div>
-                      <!-- /.direct-chat-text -->
-                    </div>
-                    <!-- /.direct-chat-msg -->
-
-                    <!-- Message to the right -->
-                    <div class="direct-chat-msg right">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-right">Sarah Bullock</span>
-                        <span class="direct-chat-timestamp pull-left">23 Jan 6:10 pm</span>
-                      </div>
-                      <!-- /.direct-chat-info -->
-                      <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                      <!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        I would love to.
-                      </div>
-                      <!-- /.direct-chat-text -->
-                    </div>
-                    <!-- /.direct-chat-msg -->
+                  <div id="messagesBody" class="direct-chat-messages">
+                    
 
                   </div>
                   <!--/.direct-chat-messages-->
@@ -162,96 +112,32 @@ if($result->num_rows > 0) {
                   <!-- Contacts are loaded here -->
                   <div class="direct-chat-contacts">
                     <ul class="contacts-list">
+                     <?php
+                    $sql1 = "SELECT * FROM friends INNER JOIN users ON friends.id_frienduser=users.id_user WHERE friends.id_user='$_SESSION[id_user]'";
+                      $result1 = $conn->query($sql1);
+
+                      if($result1->num_rows > 0) { 
+                          while($row = $result1->fetch_assoc()) {
+                    ?>
+
                       <li>
-                        <a href="#">
-                          <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Image">
+                        <a class="getMessages" href="javascript:;" data-href="get-messages.php?id=<?php echo $row['id_user']; ?>">
+                          <img class="contacts-list-img" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
 
                           <div class="contacts-list-info">
                                 <span class="contacts-list-name">
-                                  Count Dracula
-                                  <small class="contacts-list-date pull-right">2/28/2015</small>
+                                  <?php echo $row['name']; ?>
+                                  <small class="contacts-list-date pull-right"><?php if($row['online'] == '1') { echo 'Online'; } else { echo 'Offline'; } ?></small>
                                 </span>
-                            <span class="contacts-list-msg">How have you been? I was...</span>
+                            <span class="contacts-list-msg"><?php echo $row['designation']; ?></span>
                           </div>
                           <!-- /.contacts-list-info -->
                         </a>
                       </li>
                       <!-- End Contact Item -->
-                      <li>
-                        <a href="#">
-                          <img class="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Image">
 
-                          <div class="contacts-list-info">
-                                <span class="contacts-list-name">
-                                  Sarah Doe
-                                  <small class="contacts-list-date pull-right">2/23/2015</small>
-                                </span>
-                            <span class="contacts-list-msg">I will be waiting for...</span>
-                          </div>
-                          <!-- /.contacts-list-info -->
-                        </a>
-                      </li>
-                      <!-- End Contact Item -->
-                      <li>
-                        <a href="#">
-                          <img class="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Image">
+                      <?php } } ?>
 
-                          <div class="contacts-list-info">
-                                <span class="contacts-list-name">
-                                  Nadia Jolie
-                                  <small class="contacts-list-date pull-right">2/20/2015</small>
-                                </span>
-                            <span class="contacts-list-msg">I'll call you back at...</span>
-                          </div>
-                          <!-- /.contacts-list-info -->
-                        </a>
-                      </li>
-                      <!-- End Contact Item -->
-                      <li>
-                        <a href="#">
-                          <img class="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Image">
-
-                          <div class="contacts-list-info">
-                                <span class="contacts-list-name">
-                                  Nora S. Vans
-                                  <small class="contacts-list-date pull-right">2/10/2015</small>
-                                </span>
-                            <span class="contacts-list-msg">Where is your new...</span>
-                          </div>
-                          <!-- /.contacts-list-info -->
-                        </a>
-                      </li>
-                      <!-- End Contact Item -->
-                      <li>
-                        <a href="#">
-                          <img class="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Image">
-
-                          <div class="contacts-list-info">
-                                <span class="contacts-list-name">
-                                  John K.
-                                  <small class="contacts-list-date pull-right">1/27/2015</small>
-                                </span>
-                            <span class="contacts-list-msg">Can I take a look at...</span>
-                          </div>
-                          <!-- /.contacts-list-info -->
-                        </a>
-                      </li>
-                      <!-- End Contact Item -->
-                      <li>
-                        <a href="#">
-                          <img class="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Image">
-
-                          <div class="contacts-list-info">
-                                <span class="contacts-list-name">
-                                  Kenneth M.
-                                  <small class="contacts-list-date pull-right">1/4/2015</small>
-                                </span>
-                            <span class="contacts-list-msg">Never mind I found...</span>
-                          </div>
-                          <!-- /.contacts-list-info -->
-                        </a>
-                      </li>
-                      <!-- End Contact Item -->
                     </ul>
                     <!-- /.contatcts-list -->
                   </div>
@@ -302,5 +188,16 @@ if($result->num_rows > 0) {
 <script src="dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script>
+  $(function() {
+    $('.getMessages').on("click", function() {
+
+      var dataUrl = $(this).attr('data-href');
+      $("#messagesBody").load(dataUrl);
+      $("#chatButton").attr('class', 'box box-warning direct-chat direct-chat-warning');
+
+    });
+  });
+</script>
 </body>
 </html>
