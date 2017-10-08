@@ -9,7 +9,7 @@ if(empty($_SESSION['id_user'])) {
 
 require_once("db.php");
 
-$sql = "SELECT * FROM messages INNER JOIN users ON messages.id_from=users.id_user WHERE (id_from='$_SESSION[id_user]' AND id_to='$_GET[id]') OR (id_from='$_GET[id]' AND id_to='$_SESSION[id_user]') ORDER BY messages.createdAt";
+$sql = "SELECT messages.*, users.name, users.profileimage FROM messages INNER JOIN users ON messages.id_from=users.id_user WHERE (id_from='$_SESSION[id_user]' AND id_to='$_GET[id]') OR (id_from='$_GET[id]' AND id_to='$_SESSION[id_user]') ORDER BY messages.createdAt";
   $result = $conn->query($sql);
   if($result->num_rows >  0) { 
     while($row = $result->fetch_assoc()) {

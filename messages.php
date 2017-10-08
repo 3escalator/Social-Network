@@ -121,7 +121,7 @@ $_SESSION['callFrom'] = "messages.php";
                     ?>
 
                       <li>
-                        <a class="getMessages" href="javascript:;" data-href="get-messages.php?id=<?php echo $row['id_user']; ?>">
+                        <a class="getMessages" href="javascript:;" data-id="<?php echo $row['id_user']; ?>" data-href="get-messages.php?id=<?php echo $row['id_user']; ?>">
                           <img class="contacts-list-img" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
 
                           <div class="contacts-list-info">
@@ -145,11 +145,11 @@ $_SESSION['callFrom'] = "messages.php";
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <form action="#" method="post">
+                  <form id="sendMessage">
                     <div class="input-group">
-                      <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                      <input id="messageInput" type="text" name="message" placeholder="Type Message ..." autocomplete="off" class="form-control">
                       <span class="input-group-btn">
-                            <button type="button" class="btn btn-warning btn-flat">Send</button>
+                            <button type="submit" class="btn btn-warning btn-flat">Send</button>
                           </span>
                     </div>
                   </form>
@@ -189,15 +189,51 @@ $_SESSION['callFrom'] = "messages.php";
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script>
+  var id_user;
+  
   $(function() {
+
+    
+
     $('.getMessages').on("click", function() {
-
+      id_user = $(this).attr('data-id');
       var dataUrl = $(this).attr('data-href');
-      $("#messagesBody").load(dataUrl);
+      $("#messagesBody").load(dataUrl, function() {
+            $("#messagesBody").scrollTop($("#messagesBody")[0].scrollHeight);
+          });
       $("#chatButton").attr('class', 'box box-warning direct-chat direct-chat-warning');
-
     });
+
+    $("#sendMessage").on("submit", function(e) {
+      e.preventDefault();
+      var message = $("#messageInput").val();
+      $.post("addmessage.php", {message: message, id_user:id_user}).done(function(data) {
+        var result = $.trim(data);
+        if(result == "ok") {
+          $("#messageInput").val('');
+          $("#messagesBody").load("get-messages.php?id="+id_user, function() {
+            $("#messagesBody").scrollTop($("#messagesBody")[0].scrollHeight);
+          });
+        }
+      });
+    });
+
   });
 </script>
+ <?php
+  $sql1 = "SELECT * FROM messages WHERE id_from='$_SESSION[id_user]' ORDER BY id_message DESC LIMIT 1";
+    $result1 = $conn->query($sql1);
+    if($result1->num_rows > 0) { 
+        $row = $result1->fetch_assoc();
+  ?>
+  <script>
+  $(function() {
+   id_user = "<?php echo $row['id_to']; ?>";
+      $("#messagesBody").load("get-messages.php?id="+id_user, function() {
+        $("#messagesBody").scrollTop($("#messagesBody")[0].scrollHeight);
+      });
+  });
+</script>
+<?php } ?>
 </body>
 </html>
