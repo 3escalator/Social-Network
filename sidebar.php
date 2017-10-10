@@ -50,7 +50,7 @@
             <i class="fa fa-users"></i> <span>Friend Request</span>
           </a>
         </li>
-        <li>
+        <li <?php if($_SESSION['callFrom'] == "pages.php") { echo 'class="active"'; } ?>>
           <a href="pages.php">
             <i class="fa fa-file-o"></i> <span>Pages</span>
           </a>
