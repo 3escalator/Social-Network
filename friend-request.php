@@ -102,6 +102,10 @@ $_SESSION['callFrom'] = "friend-request.php";
             <div class="widget-user-image">
               <img class="img-circle" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Avatar">
             </div>
+            <?php } else { ?>
+            <div class="widget-user-image">
+              <img class="img-circle" src="dist/img/avatar5.png" alt="User Avatar">
+            </div>
             <?php } ?>
             <div class="box-footer">
               <div class="row">

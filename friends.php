@@ -130,10 +130,19 @@ $_SESSION['callFrom'] = "friends.php";
                     $result2 = $conn->query($sql2);
 
                     if($result2->num_rows == 0) { 
+
+                    $sql3 = "SELECT * FROM friendrequest WHERE id_user = '$_SESSION[id_user]' AND id_friend='$row[id_user]'"; 
+                      $result3 = $conn->query($sql3);
+                      if($result3->num_rows == 0) { 
                     ?>
                     <div class="description-block">
                       <a href="send-request.php?id=<?php echo $row['id_user']; ?>" class="btn bg-green bg-flat">Add Friend</a>
                     </div>
+                  <?php } else { ?>
+                  <div class="description-block">
+                      <a href="accept-request.php?id=<?php echo $row['id_user']; ?>" class="btn bg-maroon bg-flat">Accept Friend</a>
+                  </div>
+                  <?php } ?>
                     <?php } else {?>
                     <div class="description-block">
                       <button class="btn bg-purple bg-flat" disabled>Request Sent</button>

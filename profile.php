@@ -286,12 +286,14 @@ $_SESSION['callFrom'] = "profile.php";
                           <span class="pull-right text-muted"><?php echo $totalLikes; ?> likes - <?php echo $totalComments; ?> comments</span>
                         </div>
                         <!-- /.box-body -->
-                        <div class="box-footer box-comments">
                         <?php
                           $sql4 = "SELECT * FROM comments WHERE id_user='$_SESSION[id_user]' AND id_post='$row[id_post]'";
                           $result4 = $conn->query($sql4);
 
                           if($result4->num_rows > 0) {
+                            ?>
+                        <div class="box-footer box-comments" style="display: block;">
+                        <?php
                             while($row4 = $result4->fetch_assoc()) {
                               $sql5 = "SELECT * FROM users WHERE id_user='$row4[id_user]'";
                               $result5 = $conn->query($sql5);
@@ -317,10 +319,10 @@ $_SESSION['callFrom'] = "profile.php";
 
                           <?php
                           }
-                        }
                         ?>
 
                         </div>
+                        <?php } ?>
                         <!-- /.box-footer -->
                         <div class="box-footer">
                           <form action="#" method="post">
@@ -331,7 +333,7 @@ $_SESSION['callFrom'] = "profile.php";
                             ?>
                             <!-- .img-push is used to add margin to elements next to floating images -->
                             <div class="img-push">
-                              <input type="text" id="addcomment" data-id="<?php echo $row['id_post']; ?>" class="form-control input-sm" onkeypress="checkInput(event);" placeholder="Press enter to post comment">
+                              <input type="text" data-id="<?php echo $row['id_post']; ?>" class="addcomment form-control input-sm" onkeypress="checkInput(event, this);" placeholder="Press enter to post comment">
                             </div>
                           </form>
                         </div>
@@ -613,12 +615,12 @@ $_SESSION['callFrom'] = "profile.php";
   });
 </script>
 <script>
-  function checkInput(e) {
+  function checkInput(e, t) {
 
     //13 means enter
     if(e.keyCode === 13) {
-      var id_post = $("#addcomment").attr("data-id");
-      var comment = $("#addcomment").val();
+      var id_post = $(t).attr("data-id");
+      var comment = $(t).val();
       $.post("addcomment.php", {id:id_post, comment:comment}).done(function(data) {
         var result = $.trim(data);
         if(result == "ok") {

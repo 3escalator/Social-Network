@@ -24,6 +24,12 @@ Social Network Using PHP - Part-9 - Friends Profile - https://youtu.be/Jc-wZsCkE
 
 Social Network Using PHP - Part-10 - Friends Messaging - https://youtu.be/VLLXobXWFqM
 
+Social Network Using PHP - Part-11 - Friends Messaging Continued - https://youtu.be/QAhDnRIWzvI
+
+Social Network Using PHP - Part-12 - Pages - https://youtu.be/G_K3ujp5oxM
+
+Social Network Using PHP - Part-13 - Bug Fixing - https://youtu.be/0a99GTeM0BY
+
 # Theme
 
 Download Theme (Without PHP Code) From - http://learningfromscratch.online/download/social-network-theme/

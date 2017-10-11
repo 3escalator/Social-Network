@@ -221,7 +221,7 @@ $_SESSION['callFrom'] = "index.php";
                             ?>
                             <!-- .img-push is used to add margin to elements next to floating images -->
                             <div class="img-push">
-                              <input type="text" id="addcomment" data-id="<?php echo $row['id_post']; ?>" class="form-control input-sm" onkeypress="checkInput(event);" placeholder="Press enter to post comment">
+                              <input type="text" data-id="<?php echo $row['id_post']; ?>" class="addcomment form-control input-sm" onkeypress="checkInput(event, this);" placeholder="Press enter to post comment">
                             </div>
                           </form>
                         </div>
@@ -259,7 +259,14 @@ $_SESSION['callFrom'] = "index.php";
                       while($row = $result1->fetch_assoc()) {
                 ?>
                 <li>
-                  <img src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                  <?php if($row['profileimage'] == '') {
+                    ?>
+                     <img src="dist/img/avatar5.png" alt="User Image">
+                    <?php
+                  } else { ?>
+                   <img src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                  <?php } ?>
+                  
                   <a class="users-list-name" href="view-profile.php?id=<?php echo $row['id_user']; ?>"><?php echo $row['name']; ?></a>
                 </li>
                 <?php } ?>
@@ -291,7 +298,13 @@ $_SESSION['callFrom'] = "index.php";
                       while($row = $result1->fetch_assoc()) {
                 ?>
                 <li>
-                  <img src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                  <?php if($row['profileimage'] == '') {
+                    ?>
+                     <img src="dist/img/avatar5.png" alt="User Image">
+                    <?php
+                  } else { ?>
+                   <img src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                  <?php } ?>
                   <a class="users-list-name" href="view-profile.php?id=<?php echo $row['id_user']; ?>"><?php echo $row['name']; ?></a>
                 </li>
                 <?php } } ?>
@@ -423,12 +436,12 @@ $_SESSION['callFrom'] = "index.php";
   });
 </script>
 <script>
-  function checkInput(e) {
+  function checkInput(e, t) {
 
     //13 means enter
     if(e.keyCode === 13) {
-      var id_post = $("#addcomment").attr("data-id");
-      var comment = $("#addcomment").val();
+      var id_post = $(t).attr("data-id");
+      var comment = $(t).val();
       $.post("addcomment.php", {id:id_post, comment:comment}).done(function(data) {
         var result = $.trim(data);
         if(result == "ok") {

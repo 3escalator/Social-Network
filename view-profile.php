@@ -107,7 +107,7 @@ $_SESSION['callFrom'] = "view-profile.php?id=".$_GET['id'];
           <div class="box box-primary">
             <div class="box-body box-profile">
             <?php 
-                $sql = "SELECT * FROM users WHERE id_user='$_SESSION[id_user]'";
+                $sql = "SELECT * FROM users WHERE id_user='$_GET[id]'";
                 $result = $conn->query($sql);
                 if($result->num_rows > 0) {
                   $row = $result->fetch_assoc();

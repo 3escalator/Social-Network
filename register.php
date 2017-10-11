@@ -132,24 +132,25 @@
         errors = true;
     }
 
-    if(emailReg.test($("#email").val())) {
-      $("#emailError").hide();
-      $.post("checkemail.php", { email: $("#email").val()}).done(function(data) {
-        var result = $.trim(data);
-        if(result == "Error") {
-          $("#emailExistsError").text("This email is already registered with us. Choose Different Email.");
-          $("#emailExistsError").show();
-          errors = true;
-        } else {
-          $("#emailExistsError").hide();
-          adduser();
-        } 
-      });
-    } else {
-        $("#emailError").text("Email should be of format example@example.com");
-        $("#emailError").show();
-        errors = true;
+    if(errors == false) {
+      if(emailReg.test($("#email").val())) {
+        $("#emailError").hide();
+        $.post("checkemail.php", { email: $("#email").val()}).done(function(data) {
+          var result = $.trim(data);
+          if(result == "Error") {
+            $("#emailExistsError").text("This email is already registered with us. Choose Different Email.");
+            $("#emailExistsError").show();
+          } else {
+            $("#emailExistsError").hide();
+            adduser();
+          } 
+        });
+      } else {
+          $("#emailError").text("Email should be of format example@example.com");
+          $("#emailError").show();
+      }
     }
+    
 
 
 

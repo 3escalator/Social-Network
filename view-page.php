@@ -243,6 +243,9 @@ $_SESSION['callFrom'] = "view-page.php?id=".$_GET['id'];
                           <?php
                               if($row5['profileimage'] != "") {
                                 echo '<img class="img-circle img-sm" src="uploads/profile/'.$row5['profileimage'].'" alt="Photo">';
+                              } else {
+                                
+                                echo '<img class="img-circle img-sm" src="dist/img/avatar5.png" alt="Photo">';
                               }
                             ?>
                             <div class="comment-text">
@@ -272,11 +275,13 @@ $_SESSION['callFrom'] = "view-page.php?id=".$_GET['id'];
                               }
                               if($row5['profileimage'] != "") {
                                 echo '<img class="img-responsive img-circle img-sm" src="uploads/profile/'.$row5['profileimage'].'" alt="Photo">';
+                              } else {
+                                echo '<img class="img-responsive img-circle img-sm" src="dist/img/avatar5.png" alt="Photo">';
                               }
                             ?>
                             <!-- .img-push is used to add margin to elements next to floating images -->
                             <div class="img-push">
-                              <input type="text" id="addcomment" data-id="<?php echo $row['id_post']; ?>" class="form-control input-sm" onkeypress="checkInput(event);" placeholder="Press enter to post comment">
+                              <input type="text" data-id="<?php echo $row['id_post']; ?>" class="addcomment form-control input-sm" onkeypress="checkInput(event, this);" placeholder="Press enter to post comment">
                             </div>
                           </form>
                         </div>
@@ -340,12 +345,12 @@ $_SESSION['callFrom'] = "view-page.php?id=".$_GET['id'];
   });
 </script>
 <script>
-  function checkInput(e) {
+  function checkInput(e, t) {
 
     //13 means enter
     if(e.keyCode === 13) {
-      var id_post = $("#addcomment").attr("data-id");
-      var comment = $("#addcomment").val();
+      var id_post = $(t).attr("data-id");
+      var comment = $(t).val();
       $.post("add-post-comment.php", {id:id_post, comment:comment}).done(function(data) {
         var result = $.trim(data);
         if(result == "ok") {

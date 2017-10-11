@@ -122,7 +122,14 @@ $_SESSION['callFrom'] = "messages.php";
 
                       <li>
                         <a class="getMessages" href="javascript:;" data-id="<?php echo $row['id_user']; ?>" data-href="get-messages.php?id=<?php echo $row['id_user']; ?>">
-                          <img class="contacts-list-img" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                          <?php if($row['profileimage'] == '') {
+                          ?>
+                           <img class="contacts-list-img" src="dist/img/avatar5.png" alt="User Image">
+                          <?php
+                        } else { ?>
+                         <img class="contacts-list-img" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Image">
+                        <?php } ?>
+                         
 
                           <div class="contacts-list-info">
                                 <span class="contacts-list-name">
@@ -149,7 +156,7 @@ $_SESSION['callFrom'] = "messages.php";
                     <div class="input-group">
                       <input id="messageInput" type="text" name="message" placeholder="Type Message ..." autocomplete="off" class="form-control">
                       <span class="input-group-btn">
-                            <button type="submit" class="btn btn-warning btn-flat">Send</button>
+                            <button id="sendBtn" type="submit" class="btn btn-warning btn-flat">Send</button>
                           </span>
                     </div>
                   </form>
@@ -193,7 +200,7 @@ $_SESSION['callFrom'] = "messages.php";
   
   $(function() {
 
-    
+    checkIdUser();
 
     $('.getMessages').on("click", function() {
       id_user = $(this).attr('data-id');
@@ -202,7 +209,9 @@ $_SESSION['callFrom'] = "messages.php";
             $("#messagesBody").scrollTop($("#messagesBody")[0].scrollHeight);
           });
       $("#chatButton").attr('class', 'box box-warning direct-chat direct-chat-warning');
+      checkIdUser();
     });
+
 
     $("#sendMessage").on("submit", function(e) {
       e.preventDefault();
@@ -217,8 +226,21 @@ $_SESSION['callFrom'] = "messages.php";
         }
       });
     });
+    
+    
 
   });
+</script>
+<script>
+  function checkIdUser () {
+    if(id_user == undefined) {
+      $("#messageInput").prop('disabled', true);
+      $("#sendBtn").prop('disabled', true);
+    } else {
+      $("#messageInput").prop('disabled', false);
+      $("#sendBtn").prop('disabled', false);
+    }
+  }
 </script>
  <?php
   $sql1 = "SELECT * FROM messages WHERE id_from='$_SESSION[id_user]' ORDER BY id_message DESC LIMIT 1";
@@ -232,6 +254,7 @@ $_SESSION['callFrom'] = "messages.php";
       $("#messagesBody").load("get-messages.php?id="+id_user, function() {
         $("#messagesBody").scrollTop($("#messagesBody")[0].scrollHeight);
       });
+  checkIdUser();
   });
 </script>
 <?php } ?>

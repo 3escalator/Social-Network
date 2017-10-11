@@ -22,7 +22,13 @@ $sql = "SELECT messages.*, users.name, users.profileimage FROM messages INNER JO
     <span class="direct-chat-timestamp pull-left"><?php echo date("d-M-Y h:i a", strtotime($row['createdAt'])); ?></span>
   </div>
   <!-- /.direct-chat-info -->
+  <?php if($row['profileimage'] == '') {
+    ?>
+    <img class="direct-chat-img" src="dist/img/avatar5.png" alt="message user image">
+    <?php
+  } else { ?>
   <img class="direct-chat-img" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="message user image">
+  <?php } ?>
   <!-- /.direct-chat-img -->
   <div class="direct-chat-text">
     <?php echo $row['message']; ?>
@@ -40,7 +46,13 @@ $sql = "SELECT messages.*, users.name, users.profileimage FROM messages INNER JO
     <span class="direct-chat-timestamp pull-right"><?php echo date("d-M-Y h:i a", strtotime($row['createdAt'])); ?></span>
   </div>
   <!-- /.direct-chat-info -->
+  <?php if($row['profileimage'] == '') {
+    ?>
+    <img class="direct-chat-img" src="dist/img/avatar5.png" alt="message user image">
+    <?php
+  } else { ?>
   <img class="direct-chat-img" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="message user image">
+  <?php } ?>
   <!-- /.direct-chat-img -->
   <div class="direct-chat-text">
     <?php echo $row['message']; ?>
