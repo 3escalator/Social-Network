@@ -113,17 +113,43 @@ $_SESSION['callFrom'] = "profile.php";
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Followers</b> <a class="pull-right">1,322</a>
+                  <?php
+                   $sql1 = "SELECT * FROM user_followers WHERE id_userfollower='$_SESSION[id_user]'";
+                    $result1 = $conn->query($sql1);
+                    if($result1->num_rows > 0) {
+                      $totalno = $result1->num_rows;
+                    } else {
+                      $totalno = 0;
+                    }
+                  ?>
+                  <b>Followers</b> <a class="pull-right"><?php echo $totalno; ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Following</b> <a class="pull-right">543</a>
+                <?php
+                   $sql1 = "SELECT * FROM user_followers WHERE id_user='$_SESSION[id_user]'";
+                    $result1 = $conn->query($sql1);
+                    if($result1->num_rows > 0) {
+                      $totalno = $result1->num_rows;
+                    } else {
+                      $totalno = 0;
+                    }
+                  ?>
+                  <b>Following</b> <a class="pull-right"><?php echo $totalno; ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Friends</b> <a class="pull-right">13,287</a>
+                   <?php
+                   $sql1 = "SELECT * FROM friends WHERE id_user='$_SESSION[id_user]'";
+                    $result1 = $conn->query($sql1);
+                    if($result1->num_rows > 0) {
+                      $totalno = $result1->num_rows;
+                    } else {
+                      $totalno = 0;
+                    }
+                  ?>
+                  <b>Friends</b> <a class="pull-right"><?php echo $totalno; ?></a>
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
             </div>
             <!-- /.box-body -->
           </div>

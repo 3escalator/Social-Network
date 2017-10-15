@@ -30,6 +30,8 @@ Social Network Using PHP - Part-12 - Pages - https://youtu.be/G_K3ujp5oxM
 
 Social Network Using PHP - Part-13 - Bug Fixing - https://youtu.be/0a99GTeM0BY
 
+Social Network Using PHP - Part-14 - Followers & Friend Send Message - https://youtu.be/qoMS0OMcbw4
+
 # Theme
 
 Download Theme (Without PHP Code) From - http://learningfromscratch.online/download/social-network-theme/
