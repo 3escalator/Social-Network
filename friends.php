@@ -96,13 +96,25 @@ $_SESSION['callFrom'] = "friends.php";
             <div class="widget-user-image">
               <img class="img-circle" src="uploads/profile/<?php echo $row['profileimage']; ?>" alt="User Avatar">
             </div>
+            <?php } else { ?>
+            <div class="widget-user-image">
+              <img class="img-circle" src="dist/img/avatar5.png" alt="User Avatar">
+            </div>
             <?php } ?>
             <div class="box-footer">
               <div class="row">
                 <div class="col-sm-4 border-right">
+                  <?php
+                $sql1 = "SELECT * FROM friends WHERE id_user='$_SESSION[id_user]' AND id_frienduser='$row[id_user]'";
+                  $result1 = $conn->query($sql1);
+
+                  if($result1->num_rows > 0) { 
+                                
+                ?>
                   <div class="description-block">
-                    <button class="btn bg-purple bg-flat">Send Message</button>
+                    <a href="messages.php?id=<?php echo $row['id_user']; ?>" class="btn bg-purple bg-flat">Send Message</a>
                   </div>
+                  <?php  } ?>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->

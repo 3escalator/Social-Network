@@ -328,63 +328,47 @@ $_SESSION['callFrom'] = "index.php";
             <!-- /.box-header -->
             <div class="box-body">
               <ul class="products-list product-list-in-box">
+
+                <?php 
+                $sql = "SELECT * FROM pages ORDER BY RAND() LIMIT 4";
+                $result = $conn->query($sql);
+                if($result->num_rows > 0) {
+                  while($row = $result->fetch_assoc()) {
+                    $sql1 = "SELECT * FROM page_followers WHERE id_page='$row[id_page]'";
+                    $result1 = $conn->query($sql1);
+                    if($result1->num_rows > 0) {
+                      $totalno = $result1->num_rows;
+                    } else {
+                      $totalno = 0;
+                    }
+
+                    $colors = ['label-success', 'label-warning', 'label-info', 'label-danger', 'label-primary'];
+
+                    $key = array_rand($colors);
+                    $colorValue = $colors[$key];
+                ?>
+
                 <li class="item">
                   <div class="product-img">
-                    <img src="dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="uploads/pages/<?php echo $row['logo']; ?>" alt="Product Image">
                   </div>
                   <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Samsung TV
-                      <span class="label label-warning pull-right">25,000 Likes</span></a>
+                    <a href="view-page.php?id=<?php echo $row['id_page']; ?>" class="product-title"><?php echo $row['name']; ?>
+                      <span class="label <?php echo $colorValue; ?> pull-right"><?php echo $totalno; ?> Followers</span></a>
                     <span class="product-description">
-                          Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          <?php echo $row['description']; ?>
                         </span>
                   </div>
                 </li>
-                <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="dist/img/default-50x50.gif" alt="Product Image">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Bicycle
-                      <span class="label label-info pull-right">1500 Likes</span></a>
-                    <span class="product-description">
-                          26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                        </span>
-                  </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="dist/img/default-50x50.gif" alt="Product Image">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Xbox One <span
-                        class="label label-danger pull-right">500 Likes</span></a>
-                    <span class="product-description">
-                          Xbox One Console Bundle with Halo Master Chief Collection.
-                        </span>
-                  </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="dist/img/default-50x50.gif" alt="Product Image">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">PlayStation 4
-                      <span class="label label-success pull-right">24,000 Likes</span></a>
-                    <span class="product-description">
-                          PlayStation 4 500GB Console (PS4)
-                        </span>
-                  </div>
-                </li>
-                <!-- /.item -->
+
+                <?php } } ?>
+
+                
               </ul>
             </div>
             <!-- /.box-body -->
             <div class="box-footer text-center">
-              <a href="javascript:void(0)" class="uppercase">View All Pages</a>
+              <a href="pages.php" class="uppercase">View All Pages</a>
             </div>
             <!-- /.box-footer -->
           </div>

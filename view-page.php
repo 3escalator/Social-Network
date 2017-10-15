@@ -100,11 +100,28 @@ $_SESSION['callFrom'] = "view-page.php?id=".$_GET['id'];
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Followers</b> <a class="pull-right">1,322</a>
+                  <?php
+                   $sql1 = "SELECT * FROM page_followers WHERE id_page='$_GET[id]'";
+                    $result1 = $conn->query($sql1);
+                    if($result1->num_rows > 0) {
+                      $totalno = $result1->num_rows;
+                    } else {
+                      $totalno = 0;
+                    }
+                  ?>
+                  <b>Followers</b> <a class="pull-right"><?php echo $totalno; ?></a>
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              <?php
+                $sql1 = "SELECT * FROM page_followers WHERE id_user='$_SESSION[id_user]' AND id_page='$_GET[id]'";
+                $result1 = $conn->query($sql1);
+                if($result1->num_rows == 0) {
+              ?>
+                  <a href="page-follow.php?id=<?php echo $_GET['id']; ?>" class="btn btn-primary btn-block"><b>Follow</b></a>
+              <?php } else { ?>
+                  <a href="page-unfollow.php?id=<?php echo $_GET['id']; ?>" class="btn btn-danger btn-block"><b>UnFollow</b></a>
+              <?php } ?>
             </div>
             <!-- /.box-body -->
           </div>

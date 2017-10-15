@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2017 at 07:41 PM
+-- Generation Time: Oct 15, 2017 at 08:36 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -41,29 +41,12 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id_comment`, `id_user`, `id_post`, `comment`, `createdAt`) VALUES
-(1, 13, 7, 'test test ', '2017-09-06 11:07:17'),
-(2, 13, 7, 'testtdsaffdasdffdsafdsa', '2017-09-06 11:14:53'),
-(3, 13, 7, 'faasdfsafdadsffsad', '2017-09-06 11:14:58'),
-(4, 13, 7, 'adfsfadsfdadfsadffad', '2017-09-06 11:15:02'),
-(5, 13, 7, 'afdsadfafsd', '2017-09-06 11:15:06'),
-(6, 13, 7, 'test3', '2017-09-06 11:15:08'),
-(7, 13, 11, 'comment1', '2017-09-10 17:54:46'),
-(8, 13, 11, 'comment2', '2017-09-10 17:55:11'),
-(9, 13, 11, '', '2017-09-10 18:04:06'),
-(10, 13, 11, '', '2017-09-10 18:04:17'),
-(11, 13, 11, 'test3', '2017-09-10 18:04:23'),
-(12, 13, 11, '', '2017-09-10 18:04:36'),
-(13, 13, 11, '', '2017-09-10 18:05:20'),
-(14, 13, 11, '', '2017-09-10 18:06:20'),
-(15, 13, 11, '', '2017-09-10 18:06:28'),
-(16, 13, 0, '', '2017-09-10 18:08:01'),
-(17, 13, 0, '', '2017-09-10 18:08:11'),
-(18, 13, 11, '', '2017-09-10 18:08:41'),
-(19, 13, 11, '', '2017-09-10 18:08:56'),
-(20, 13, 11, '', '2017-09-10 18:09:00'),
-(21, 13, 11, 'sasdf', '2017-09-10 18:09:04'),
-(22, 13, 11, '', '2017-09-10 18:09:12'),
-(23, 13, 3, 'sgds', '2017-10-05 16:10:43');
+(36, 13, 12, 'Comment 1', '2017-10-11 14:57:31'),
+(37, 13, 9, 'Comment 2', '2017-10-11 14:57:38'),
+(38, 13, 9, 'Comment 3', '2017-10-11 14:57:43'),
+(39, 13, 7, 'Comment 4', '2017-10-11 14:57:48'),
+(40, 13, 12, 'Comment5', '2017-10-11 14:59:18'),
+(41, 13, 8, 'Comment 6', '2017-10-11 14:59:28');
 
 -- --------------------------------------------------------
 
@@ -94,10 +77,10 @@ CREATE TABLE `friends` (
 --
 
 INSERT INTO `friends` (`id_friend`, `id_user`, `id_frienduser`) VALUES
-(5, 13, 15),
-(6, 15, 13),
 (9, 14, 13),
-(10, 13, 14);
+(10, 13, 14),
+(17, 13, 19),
+(18, 19, 13);
 
 -- --------------------------------------------------------
 
@@ -146,7 +129,8 @@ INSERT INTO `likes` (`id_likes`, `id_user`, `id_post`, `liked`) VALUES
 (10, 13, 3, 1),
 (11, 13, 2, 1),
 (12, 13, 1, 1),
-(13, 13, 10, 1);
+(13, 13, 10, 1),
+(14, 13, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -167,8 +151,129 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`id_message`, `id_from`, `id_to`, `message`, `createdAt`) VALUES
-(1, 15, 13, 'Testing Message 1', '2017-10-06 15:54:24'),
-(2, 13, 15, 'testing message2', '2017-10-06 15:54:52');
+(67, 13, 19, 'fsdafd', '2017-10-11 15:37:05'),
+(68, 19, 13, 'fsdasfd', '2017-10-11 15:37:16'),
+(69, 13, 14, 'gsfgfsf', '2017-10-15 16:30:40'),
+(70, 13, 19, 'safdssfad', '2017-10-15 16:31:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pages`
+--
+
+CREATE TABLE `pages` (
+  `id_page` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id_page`, `id_user`, `name`, `description`, `logo`, `createdAt`) VALUES
+(2, 13, 'Page 1', 'My First Page', '59dcd6f24f174.png', '2017-10-10 14:19:30'),
+(3, 13, 'Page 2', 'MY Second page', '59dcd7e2283a1.png', '2017-10-10 14:23:30'),
+(4, 14, 'Page 3', 'somethinga sadfj sadf[kfsd[a sd', '59e3887b20b9d.png', '2017-10-15 16:10:35'),
+(5, 14, 'Page 4', 'adfdsffsda affdsa fsd', '59e38888a2e35.jpg', '2017-10-15 16:10:48'),
+(6, 13, 'Page 5', 'fafsdafad', '59e3889d6ff9f.jpg', '2017-10-15 16:11:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page_comments`
+--
+
+CREATE TABLE `page_comments` (
+  `id_comment` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_post` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `page_comments`
+--
+
+INSERT INTO `page_comments` (`id_comment`, `id_user`, `id_post`, `comment`, `createdAt`) VALUES
+(6, 13, 4, 'Comment 1', '2017-10-11 15:00:47'),
+(7, 13, 2, 'Comment 2', '2017-10-11 15:00:52'),
+(8, 13, 1, 'Comment 3', '2017-10-11 15:00:56'),
+(9, 13, 2, 'Comment 4', '2017-10-11 15:00:59'),
+(10, 19, 2, 'some comment', '2017-10-11 15:22:10'),
+(11, 19, 1, 'hello', '2017-10-11 15:24:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page_followers`
+--
+
+CREATE TABLE `page_followers` (
+  `id_follower` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_page` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `page_followers`
+--
+
+INSERT INTO `page_followers` (`id_follower`, `id_user`, `id_page`) VALUES
+(3, 13, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page_likes`
+--
+
+CREATE TABLE `page_likes` (
+  `id_likes` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_post` int(11) NOT NULL,
+  `liked` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `page_likes`
+--
+
+INSERT INTO `page_likes` (`id_likes`, `id_user`, `id_post`, `liked`) VALUES
+(1, 13, 2, 1),
+(2, 15, 2, 1),
+(3, 15, 1, 1),
+(4, 13, 1, 1),
+(5, 15, 4, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page_posts`
+--
+
+CREATE TABLE `page_posts` (
+  `id_post` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_page` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `page_posts`
+--
+
+INSERT INTO `page_posts` (`id_post`, `id_user`, `id_page`, `description`, `image`, `createdAt`) VALUES
+(1, 13, 2, 'dsafddfs', '', '2017-10-10 14:40:17'),
+(2, 13, 2, 'afsdfsd', '', '2017-10-10 14:40:19'),
+(4, 13, 2, 'post3', '', '2017-10-10 14:42:14');
 
 -- --------------------------------------------------------
 
@@ -224,9 +329,31 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `createdAt`, `designation`, `degree`, `university`, `city`, `country`, `skills`, `aboutme`, `profileimage`, `online`) VALUES
-(13, 'John Smith', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 0),
-(14, 'XYZ', 'test2@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59ad28c885f9c.png', 0),
-(15, 'BCD', 'test1@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 1);
+(13, 'John Smith', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 1),
+(14, 'XYZ', 'test2@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a48989ea1.png', 1),
+(15, 'BCD', 'test1@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 0),
+(19, 'tester', 'test@tes7t.com', 'MzYwNmZkMmJiYzg3MDQ1Nzc4ZDIwMmJhNGUzZTg4ZWQ=', '2017-10-11 15:19:32', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_followers`
+--
+
+CREATE TABLE `user_followers` (
+  `id_follower` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_userfollower` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_followers`
+--
+
+INSERT INTO `user_followers` (`id_follower`, `id_user`, `id_userfollower`) VALUES
+(2, 13, 14),
+(3, 13, 15),
+(5, 14, 13);
 
 --
 -- Indexes for dumped tables
@@ -269,6 +396,36 @@ ALTER TABLE `messages`
   ADD PRIMARY KEY (`id_message`);
 
 --
+-- Indexes for table `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id_page`);
+
+--
+-- Indexes for table `page_comments`
+--
+ALTER TABLE `page_comments`
+  ADD PRIMARY KEY (`id_comment`);
+
+--
+-- Indexes for table `page_followers`
+--
+ALTER TABLE `page_followers`
+  ADD PRIMARY KEY (`id_follower`);
+
+--
+-- Indexes for table `page_likes`
+--
+ALTER TABLE `page_likes`
+  ADD PRIMARY KEY (`id_likes`);
+
+--
+-- Indexes for table `page_posts`
+--
+ALTER TABLE `page_posts`
+  ADD PRIMARY KEY (`id_post`);
+
+--
 -- Indexes for table `post`
 --
 ALTER TABLE `post`
@@ -281,6 +438,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
 
 --
+-- Indexes for table `user_followers`
+--
+ALTER TABLE `user_followers`
+  ADD PRIMARY KEY (`id_follower`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -288,17 +451,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `friendrequest`
 --
 ALTER TABLE `friendrequest`
-  MODIFY `id_friendrequest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_friendrequest` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `friends`
 --
 ALTER TABLE `friends`
-  MODIFY `id_friend` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_friend` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `friend_posts`
 --
@@ -308,12 +471,37 @@ ALTER TABLE `friend_posts`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id_likes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_likes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id_message` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_message` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+--
+-- AUTO_INCREMENT for table `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id_page` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `page_comments`
+--
+ALTER TABLE `page_comments`
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `page_followers`
+--
+ALTER TABLE `page_followers`
+  MODIFY `id_follower` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `page_likes`
+--
+ALTER TABLE `page_likes`
+  MODIFY `id_likes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `page_posts`
+--
+ALTER TABLE `page_posts`
+  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `post`
 --
@@ -323,7 +511,12 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;COMMIT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+--
+-- AUTO_INCREMENT for table `user_followers`
+--
+ALTER TABLE `user_followers`
+  MODIFY `id_follower` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

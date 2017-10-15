@@ -242,7 +242,29 @@ $_SESSION['callFrom'] = "messages.php";
     }
   }
 </script>
- <?php
+<?php
+if(isset($_GET['id'])) {
+
+  $sql1 = "SELECT * FROM friends WHERE id_user='$_SESSION[id_user]' AND id_frienduser='$_GET[id]'";
+  $result1 = $conn->query($sql1);
+    if($result1->num_rows > 0) { 
+    ?>
+      <script>
+      $(function() {
+       id_user = "<?php echo $_GET['id']; ?>";
+          $("#messagesBody").load("get-messages.php?id="+id_user, function() {
+            $("#messagesBody").scrollTop($("#messagesBody")[0].scrollHeight);
+          });
+      checkIdUser();
+      });
+    </script>
+      <?php 
+  } else {
+    header("Location: friends.php");
+    exit();
+  }
+
+} else {
   $sql1 = "SELECT * FROM messages WHERE id_from='$_SESSION[id_user]' ORDER BY id_message DESC LIMIT 1";
     $result1 = $conn->query($sql1);
     if($result1->num_rows > 0) { 
@@ -257,6 +279,10 @@ $_SESSION['callFrom'] = "messages.php";
   checkIdUser();
   });
 </script>
-<?php } ?>
+<?php 
+  }
+
+} 
+?>
 </body>
 </html>
