@@ -164,7 +164,12 @@ $_SESSION['callFrom'] = "view-page.php?id=".$_GET['id'];
                         </label>
                         
                       </div>
-                      <button class="btn btn-warning pull-right margin-r-5">Video</button>
+                      <div class="pull-right margin-r-5">
+                        <label class="btn btn-warning">Video
+                          <input type="file" name="video" id="ProfileVideoBtn" accept=".mp4">
+                        </label>
+                      </div>
+                <div>
                       <div>
                         <?php if(isset($_SESSION['uploadError'])) { ?>
                           <p><?php echo $_SESSION['uploadError']; ?></p>
@@ -205,6 +210,30 @@ $_SESSION['callFrom'] = "view-page.php?id=".$_GET['id'];
                         <?php
                           if($row['image'] != "") {
                             echo '<img class="img-responsive pad" src="uploads/pages/'.$row['image'].'" alt="Photo">';
+                          }
+
+                          if($row['video'] != "") {
+                            ?>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <div class="embed-responsive embed-responsive-16by9">
+                                    <video src="uploads/pages/<?php echo $row['video']; ?>" controls></video>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
+                          }
+
+                          if($row['youtube'] != "") {
+                            ?>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe src="https://www.youtube.com/embed/<?php echo $row['youtube']; ?>?rel=0&amp;showinfo=0" class="embed-responsive-item"></iframe>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
                           }
                         ?>
                           

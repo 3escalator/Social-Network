@@ -236,11 +236,14 @@ $_SESSION['callFrom'] = "profile.php";
                       <button type="submit" class="btn btn-info">Post</button>
                       <div class="pull-right margin-r-5">
                         <label class="btn btn-warning">Image
-                          <input type="file" name="image" id="ProfileImageBtn">
+                          <input type="file" name="image" id="ProfileImageBtn" accept=".png, .jpg, .jpeg">
                         </label>
-                        
                       </div>
-                      <button class="btn btn-warning pull-right margin-r-5">Video</button>
+                      <div class="pull-right margin-r-5">
+                        <label class="btn btn-warning">Video
+                          <input type="file" name="video" id="ProfileVideoBtn" accept=".mp4">
+                        </label>
+                      </div>
                       <div>
                         <?php if(isset($_SESSION['uploadError'])) { ?>
                           <p><?php echo $_SESSION['uploadError']; ?></p>
@@ -278,6 +281,30 @@ $_SESSION['callFrom'] = "profile.php";
                         <?php
                           if($row['image'] != "") {
                             echo '<img class="img-responsive pad" src="uploads/post/'.$row['image'].'" alt="Photo">';
+                          }
+
+                          if($row['video'] != "") {
+                            ?>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <div class="embed-responsive embed-responsive-16by9">
+                                    <video src="uploads/post/<?php echo $row['video']; ?>" controls></video>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
+                          }
+
+                          if($row['youtube'] != "") {
+                            ?>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe src="https://www.youtube.com/embed/<?php echo $row['youtube']; ?>?rel=0&amp;showinfo=0" class="embed-responsive-item"></iframe>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
                           }
                         ?>
                           

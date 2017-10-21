@@ -8,7 +8,8 @@
 	display: none;
 }
 
-#ProfileImageBtn {
+#ProfileImageBtn,
+#ProfileVideoBtn {
 	display: none;
 }
 
