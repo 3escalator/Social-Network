@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2017 at 08:36 PM
+-- Generation Time: Oct 22, 2017 at 05:18 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -47,6 +47,45 @@ INSERT INTO `comments` (`id_comment`, `id_user`, `id_post`, `comment`, `createdA
 (39, 13, 7, 'Comment 4', '2017-10-11 14:57:48'),
 (40, 13, 12, 'Comment5', '2017-10-11 14:59:18'),
 (41, 13, 8, 'Comment 6', '2017-10-11 14:59:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id_event` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `color` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id_event`, `id_user`, `name`, `color`) VALUES
+(9, 13, 'Hello', 'text-navy'),
+(10, 13, 'New Event', 'text-fuchsia'),
+(11, 13, 'New', 'text-yellow');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_calendar`
+--
+
+CREATE TABLE `event_calendar` (
+  `id_calendar` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `day` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `bgColor` varchar(255) NOT NULL,
+  `borderColor` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -263,6 +302,8 @@ CREATE TABLE `page_posts` (
   `id_page` int(11) NOT NULL,
   `description` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `video` varchar(255) NOT NULL,
+  `youtube` varchar(255) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -270,10 +311,12 @@ CREATE TABLE `page_posts` (
 -- Dumping data for table `page_posts`
 --
 
-INSERT INTO `page_posts` (`id_post`, `id_user`, `id_page`, `description`, `image`, `createdAt`) VALUES
-(1, 13, 2, 'dsafddfs', '', '2017-10-10 14:40:17'),
-(2, 13, 2, 'afsdfsd', '', '2017-10-10 14:40:19'),
-(4, 13, 2, 'post3', '', '2017-10-10 14:42:14');
+INSERT INTO `page_posts` (`id_post`, `id_user`, `id_page`, `description`, `image`, `video`, `youtube`, `createdAt`) VALUES
+(1, 13, 2, 'dsafddfs', '', '', '', '2017-10-10 14:40:17'),
+(2, 13, 2, 'afsdfsd', '', '', '', '2017-10-10 14:40:19'),
+(4, 13, 2, 'post3', '', '', '', '2017-10-10 14:42:14'),
+(5, 13, 2, 'afdsfds', '', '59ea321cea494.mp4', '', '2017-10-20 17:27:56'),
+(6, 13, 2, 'asfdsdfasd https://www.youtube.com/watch?v=RgKAFK5djSk afasfdsafds', '', '', 'RgKAFK5djSk', '2017-10-20 17:28:32');
 
 -- --------------------------------------------------------
 
@@ -286,6 +329,8 @@ CREATE TABLE `post` (
   `id_user` int(11) NOT NULL,
   `description` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `video` varchar(255) NOT NULL,
+  `youtube` varchar(255) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -293,13 +338,21 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`id_post`, `id_user`, `description`, `image`, `createdAt`) VALUES
-(7, 13, 'test test test test test test test test test test test test test test test test test test test test test test test test test ', '', '2017-09-06 10:31:47'),
-(8, 13, 'test test', '', '2017-09-10 17:51:40'),
-(9, 13, 'test3', '', '2017-09-10 17:53:39'),
-(10, 15, 'test3', '', '2017-10-04 15:46:22'),
-(11, 15, 'test4', '', '2017-10-04 15:46:20'),
-(12, 13, 'test7', '', '2017-10-05 15:59:10');
+INSERT INTO `post` (`id_post`, `id_user`, `description`, `image`, `video`, `youtube`, `createdAt`) VALUES
+(7, 13, 'test test test test test test test test test test test test test test test test test test test test test test test test test ', '', '', '', '2017-09-06 10:31:47'),
+(8, 13, 'test test', '', '', '', '2017-09-10 17:51:40'),
+(9, 13, 'test3', '', '', '', '2017-09-10 17:53:39'),
+(10, 15, 'test3', '', '', '', '2017-10-04 15:46:22'),
+(11, 15, 'test4', '', '', '', '2017-10-04 15:46:20'),
+(12, 13, 'test7', '', '', '', '2017-10-05 15:59:10'),
+(13, 13, 'no video post', '', '', '', '2017-10-20 17:09:25'),
+(14, 13, 'video post', '', '59ea2dd69816f.mp4', '', '2017-10-20 17:09:42'),
+(15, 13, 'Video & Image', '59ea2ea7aeecf.jpg', '59ea2ea7af579.mp4', '', '2017-10-20 17:13:11'),
+(16, 13, 'Testing youtube videos https://youtu.be/RgKAFK5djSk asfdsajfidsa fpjsd aiofj adsiojf ioasj dfofs', '', '', 'RgKAFK5djSk', '2017-10-20 17:20:43'),
+(17, 13, 'asdffsd sadfasf  https://www.youtube.com/watch?v=RgKAFK5djSk asdfjsapdfj sadfsadjf', '', '', 'RgKAFK5djSk', '2017-10-20 17:23:29'),
+(18, 13, 'asasfd sfsadf asdf sad fsdfdsadsf dfsdfasdfs', '', '', '', '2017-10-20 17:23:47'),
+(19, 13, 'asdfafsddsafv https://www.youtube.com/watch?v=RgKAFK5djSk dfsadfsdfsfds', '', '', 'RgKAFK5djSk', '2017-10-20 17:25:06'),
+(20, 13, 'asdfsfadsfds', '', '59ea3178ab919.mp4', '', '2017-10-20 17:25:12');
 
 -- --------------------------------------------------------
 
@@ -330,7 +383,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `createdAt`, `designation`, `degree`, `university`, `city`, `country`, `skills`, `aboutme`, `profileimage`, `online`) VALUES
 (13, 'John Smith', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 1),
-(14, 'XYZ', 'test2@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a48989ea1.png', 1),
+(14, 'XYZ', 'test2@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a48989ea1.png', 0),
 (15, 'BCD', 'test1@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-09-04 07:45:47', 'Web Developer', 'B.Tech', 'ABCB', 'Sydney', 'Australia', 'PHP HTML CSS', 'I like to code and teach.', '59d7a6bec555b.png', 0),
 (19, 'tester', 'test@tes7t.com', 'MzYwNmZkMmJiYzg3MDQ1Nzc4ZDIwMmJhNGUzZTg4ZWQ=', '2017-10-11 15:19:32', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
@@ -364,6 +417,18 @@ INSERT INTO `user_followers` (`id_follower`, `id_user`, `id_userfollower`) VALUE
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id_comment`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id_event`);
+
+--
+-- Indexes for table `event_calendar`
+--
+ALTER TABLE `event_calendar`
+  ADD PRIMARY KEY (`id_calendar`);
 
 --
 -- Indexes for table `friendrequest`
@@ -453,6 +518,16 @@ ALTER TABLE `user_followers`
 ALTER TABLE `comments`
   MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `event_calendar`
+--
+ALTER TABLE `event_calendar`
+  MODIFY `id_calendar` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `friendrequest`
 --
 ALTER TABLE `friendrequest`
@@ -501,12 +576,12 @@ ALTER TABLE `page_likes`
 -- AUTO_INCREMENT for table `page_posts`
 --
 ALTER TABLE `page_posts`
-  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `users`
 --

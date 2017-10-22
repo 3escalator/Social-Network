@@ -1,3 +1,29 @@
+<?php
+
+session_start();
+
+if(empty($_SESSION['id_user'])) {
+  header("Location: login.php");
+  exit();
+}
+
+require_once("db.php");
+
+$name = $designation ="";
+
+$sql = "SELECT * FROM users WHERE id_user='$_SESSION[id_user]'";
+$result = $conn->query($sql);
+
+if($result->num_rows > 0) { 
+  while($row = $result->fetch_assoc()) {
+    $name = $row['name'];
+    $designation = $row['designation'];
+  }
+}
+
+$_SESSION['callFrom'] = "events.php";
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,231 +59,11 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+  <!-- Header -->
+  <?php include_once("header.php"); ?>
 
-    <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>S</b>N</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Social </b>Network</span>
-    </a>
-
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        AdminLTE Design Team
-                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Developers
-                        <small><i class="fa fa-clock-o"></i> Today</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Sales Department
-                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Reviewers
-                        <small><i class="fa fa-clock-o"></i> 2 days</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-
-    </nav>
-  </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-      <!-- sidebar menu  -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li>
-          <a href="profile.php">
-            <i class="fa fa-user-o"></i> <span>Profile</span>
-          </a>
-        </li>
-        <li>
-          <a href="index.php">
-            <i class="fa fa-newspaper-o"></i> <span>News Feed</span>
-          </a>
-        </li>
-        <li>
-          <a href="messages.php">
-            <i class="fa fa-wechat"></i> <span>Messages</span>
-          </a>
-        </li>
-        <li>
-          <a href="friends.php">
-            <i class="fa fa-users"></i> <span>Friends</span>
-          </a>
-        </li>
-        <li>
-          <a href="pages.php">
-            <i class="fa fa-file-o"></i> <span>Pages</span>
-          </a>
-        </li>
-        <li class="active">
-          <a href="events.php">
-            <i class="fa fa-calendar"></i> <span>Events</span>
-          </a>
-        </li>
-        <li>
-          <a href="photos.php">
-            <i class="fa  fa-file-photo-o"></i> <span>Photos</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+  <?php include_once("sidebar.php"); ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -278,22 +84,26 @@
         <div class="col-md-3">
           <div class="box box-solid">
             <div class="box-header with-border">
-              <h4 class="box-title">Draggable Events</h4>
+              <h4 class="box-title">My Events</h4>
             </div>
             <div class="box-body">
               <!-- the events -->
               <div id="external-events">
-                <div class="external-event bg-green">Lunch</div>
-                <div class="external-event bg-yellow">Go home</div>
-                <div class="external-event bg-aqua">Do homework</div>
-                <div class="external-event bg-light-blue">Work on UI design</div>
-                <div class="external-event bg-red">Sleep tight</div>
-                <div class="checkbox">
-                  <label for="drop-remove">
-                    <input type="checkbox" id="drop-remove">
-                    remove after drop
-                  </label>
-                </div>
+              <?php
+                $sqlEvent = "SELECT * FROM events WHERE id_user='$_SESSION[id_user]' ORDER BY id_event DESC";
+                $resultEvent = $conn->query($sqlEvent);
+                if($resultEvent->num_rows > 0) {
+                  while($row = $resultEvent->fetch_assoc()) {
+                    $color = str_replace("text", "bg", $row['color']);
+                    ?>
+                      <div class="external-event <?php echo $color; ?>" data-id="<?php echo $row['id_event']; ?>"><?php echo $row['name']; ?></div>
+                    <?php
+                  }
+                }
+                ?>
+                <div>
+                  <h1 id="trash"><i class="fa fa-trash"></i></h1>
+                </div>                
               </div>
             </div>
             <!-- /.box-body -->
@@ -380,9 +190,44 @@
 <!-- fullCalendar -->
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+
+
+<?php
+
+$eventJSON = array();
+$sqlEvent = "SELECT * FROM event_calendar WHERE id_user='$_SESSION[id_user]'";
+$resultEvent = $conn->query($sqlEvent);
+if($resultEvent->num_rows > 0) {
+  while($row = $resultEvent->fetch_assoc()) {
+    array_push($eventJSON, $row);
+  }
+}
+
+$eventJSON = json_encode($eventJSON);
+
+?>
+
 <!-- Page specific script -->
 <script>
   $(function () {
+
+
+
+    $('#trash').droppable({
+      drop: function(event, ui) {
+        var dataId = ui.draggable.attr("data-id");
+
+        $.post("delete-event.php", { id: dataId }).done(function(data) {
+          var result = $.trim(data);
+          if(result == "ok") {
+            ui.draggable.remove();
+          }
+        });
+      }
+    });
+
+
+
 
     /* initialize the external events
      -----------------------------------------------------------------*/
@@ -417,6 +262,24 @@
     var d    = date.getDate(),
         m    = date.getMonth(),
         y    = date.getFullYear()
+
+    var eventJSON = JSON.parse('<?php echo $eventJSON; ?>');
+    var eventData = [];
+
+    for (var i = 0; i < eventJSON.length; i++) {
+      eventData.push(
+                  {
+                    title          :  eventJSON[i]['title'],
+                    start          : new Date(eventJSON[i]['year'], eventJSON[i]['month'], eventJSON[i]['day']),
+                    backgroundColor: eventJSON[i]['bgColor'], 
+                    borderColor    : eventJSON[i]['borderColor'],
+                    allDay         : true,
+                    dataId         : eventJSON[i]['id_calendar'] 
+                  }
+        );
+    }
+
+
     $('#calendar').fullCalendar({
       header    : {
         left  : 'prev,next today',
@@ -429,53 +292,7 @@
         week : 'week',
         day  : 'day'
       },
-      //Random default events
-      events    : [
-        {
-          title          : 'All Day Event',
-          start          : new Date(y, m, 1),
-          backgroundColor: '#f56954', //red
-          borderColor    : '#f56954' //red
-        },
-        {
-          title          : 'Long Event',
-          start          : new Date(y, m, d - 5),
-          end            : new Date(y, m, d - 2),
-          backgroundColor: '#f39c12', //yellow
-          borderColor    : '#f39c12' //yellow
-        },
-        {
-          title          : 'Meeting',
-          start          : new Date(y, m, d, 10, 30),
-          allDay         : false,
-          backgroundColor: '#0073b7', //Blue
-          borderColor    : '#0073b7' //Blue
-        },
-        {
-          title          : 'Lunch',
-          start          : new Date(y, m, d, 12, 0),
-          end            : new Date(y, m, d, 14, 0),
-          allDay         : false,
-          backgroundColor: '#00c0ef', //Info (aqua)
-          borderColor    : '#00c0ef' //Info (aqua)
-        },
-        {
-          title          : 'Birthday Party',
-          start          : new Date(y, m, d + 1, 19, 0),
-          end            : new Date(y, m, d + 1, 22, 30),
-          allDay         : false,
-          backgroundColor: '#00a65a', //Success (green)
-          borderColor    : '#00a65a' //Success (green)
-        },
-        {
-          title          : 'Click for Google',
-          start          : new Date(y, m, 28),
-          end            : new Date(y, m, 29),
-          url            : 'http://google.com/',
-          backgroundColor: '#3c8dbc', //Primary (light-blue)
-          borderColor    : '#3c8dbc' //Primary (light-blue)
-        }
-      ],
+      events    : eventData,
       editable  : true,
       droppable : true, // this allows things to be dropped onto the calendar !!!
       drop      : function (date, allDay) { // this function is called when something is dropped
@@ -492,6 +309,25 @@
         copiedEventObject.backgroundColor = $(this).css('background-color')
         copiedEventObject.borderColor     = $(this).css('border-color')
 
+
+        // title, bgColor, borderColor, day, month, year
+        var dateToSave = date.toDate();
+
+        var bgColor = $(this).css('background-color');
+        var borderColor = $(this).css('border-color');
+        var title = copiedEventObject['title'];
+
+        var dayToSave = dateToSave.getDate();
+        var monthToSave = dateToSave.getMonth();
+        var yearToSave = dateToSave.getFullYear();
+
+        $.post("add-event.php", { title: title, bgColor: bgColor, borderColor: borderColor, day: dayToSave, month: monthToSave, year: yearToSave}).done(function(data) {
+          location.reload();
+        });
+
+
+
+
         // render the event on the calendar
         // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
         $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
@@ -502,15 +338,33 @@
           $(this).remove()
         }
 
+      },
+      eventClick: function(event) {
+        var dataId = event.dataId;
+        var eventObj = $(this);
+        $.post("delete-event-calendar.php", {id: dataId}).done(function(data) {
+          var result = $.trim(data);
+
+          if(result == "ok") {
+            $(eventObj).remove();
+            location.reload();
+          }
+        });        
       }
     })
 
     /* ADDING EVENTS */
     var currColor = '#3c8dbc' //Red by default
+
+    var className = "text-blue";
+
     //Color chooser button
     var colorChooser = $('#color-chooser-btn')
     $('#color-chooser > li > a').click(function (e) {
       e.preventDefault()
+
+      className = $(this).attr('class');
+
       //Save color
       currColor = $(this).css('color')
       //Add color effect to button
@@ -539,6 +393,9 @@
 
       //Remove event from text input
       $('#new-event').val('')
+
+      $.post("create-event.php", { name: val, color: className });
+
     })
   })
 </script>

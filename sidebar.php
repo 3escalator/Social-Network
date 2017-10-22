@@ -55,7 +55,7 @@
             <i class="fa fa-file-o"></i> <span>Pages</span>
           </a>
         </li>
-        <li>
+        <li <?php if($_SESSION['callFrom'] == "events.php") { echo 'class="active"'; } ?>>
           <a href="events.php">
             <i class="fa fa-calendar"></i> <span>Events</span>
           </a>
