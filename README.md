@@ -2,7 +2,7 @@
 
 Create social network website like facebook using php
 
-# View Tutorials
+# View Tutorials (Series Completed)
 
 Social Network Using PHP - Part-1 - Introduction - https://youtu.be/wCVKChmDwvI
 
@@ -35,6 +35,34 @@ Social Network Using PHP - Part-14 - Followers & Friend Send Message - https://y
 Social Network Using PHP - Part-15 - Video Post - https://youtu.be/YoTmSwIds_s
 
 Social Network Using PHP - Part-16 - Events Calendar - https://youtu.be/3azsK3vkIhE
+
+Social Network Using PHP - Part-17 - Photos & Other Fixes (Series Completed) - https://youtu.be/yUxEzqlmkzU
+
+# Website Testing
+
+Download the latest Database_Tables_SQL.sql file.
+
+Step 1: Create a database called ```socialnetwork``` and import everything from Database_Tables_SQL.sql file. Next check your db.php file for database connection configuration
+
+```php
+//Your db.php Mysql Config
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "socialnetwork";
+```
+
+Step2: Now you can login with following details
+
+```php
+Email: test@test.com
+Password: 12345
+
+Email: test2@test.com
+Password: 12345
+```
+
+Step3: After you have logged in, you can test the website and check all functionalities.
 
 # Theme
 

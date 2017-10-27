@@ -20,3 +20,9 @@
 .commentBtn {
 	cursor: pointer;
 }
+
+.photo {
+	max-height: 100px;
+	width: auto;
+	margin: auto;
+}

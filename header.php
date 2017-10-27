@@ -86,6 +86,7 @@
                         if($result->num_rows > 0) {
                           $row = $result->fetch_assoc();
                           if($row['profileimage'] != '') {
+                             $profileimage = $row['profileimage'];
                             echo '<img src="uploads/profile/'.$row['profileimage'].'" class="img-circle" alt="User Image">';
                           } else {
                             echo '<img src="dist/img/avatar5.png" class="img-circle" alt="User Image">';
