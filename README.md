@@ -36,7 +36,9 @@ Social Network Using PHP - Part-15 - Video Post - https://youtu.be/YoTmSwIds_s
 
 Social Network Using PHP - Part-16 - Events Calendar - https://youtu.be/3azsK3vkIhE
 
-Social Network Using PHP - Part-17 - Photos & Other Fixes (Series Completed) - https://youtu.be/yUxEzqlmkzU
+Social Network Using PHP - Part-17 - Photos & Other Fixes - https://youtu.be/yUxEzqlmkzU
+
+Social Network Using PHP - Part-18 - Message Notification (Series Completed) - https://youtu.be/bkNXslfzRBI
 
 # Website Testing
 

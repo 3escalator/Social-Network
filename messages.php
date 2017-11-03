@@ -23,6 +23,16 @@ if($result->num_rows > 0) {
 
 $_SESSION['callFrom'] = "messages.php";
 
+$sql = "SELECT id_from FROM messages WHERE id_to='$_SESSION[id_user]' AND viewed='0' GROUP BY id_from";
+$result = $conn->query($sql);
+if($result->num_rows > 0) {
+  $notificationArray = array();
+  while($row = $result->fetch_assoc()) {
+    array_push($notificationArray, $row['id_from']);
+  }
+  $notificationArray = json_encode($notificationArray);
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -81,7 +91,7 @@ $_SESSION['callFrom'] = "messages.php";
           <!-- DIRECT CHAT -->
               <div id="chatButton" class="box box-warning direct-chat direct-chat-warning">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Messenger</h3>
+                  <h3 class="box-title">Messenger - <span id="userName"></span></h3>
 
                   <div class="box-tools pull-right">
                     <?php
@@ -197,8 +207,16 @@ $_SESSION['callFrom'] = "messages.php";
 <script src="dist/js/demo.js"></script>
 <script>
   var id_user;
+
+  <?php if(empty($notificationArray)) { ?>
+  var notificationArray = [];
+  <?php } else { ?>
+    var notificationArray = '<?php echo $notificationArray; ?>';
+  <?php } ?>
   
   $(function() {
+
+    
 
     checkIdUser();
 
@@ -239,6 +257,22 @@ $_SESSION['callFrom'] = "messages.php";
     } else {
       $("#messageInput").prop('disabled', false);
       $("#sendBtn").prop('disabled', false);
+      getUsername();
+      notificationRead();
+    }
+  }
+  function getUsername() {
+    $.post("get-message-name.php", {id:id_user}).done(function(data) {
+      $("#userName").text(data);
+    });
+  }
+  function notificationRead() {
+    // check if id_user exists in notification array or not.
+    if(notificationArray.indexOf(id_user) > -1) { 
+      // if id_user is not in notification array then it will return -1 and the condition will become false
+      $.post("message-notification.php", { id:id_user}).done(function(data) {
+        $("#header").load(location.href + " #header");
+      });
     }
   }
 </script>

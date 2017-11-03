@@ -312,7 +312,7 @@ $_SESSION['callFrom'] = "view-page.php?id=".$_GET['id'];
                         <!-- /.box-footer -->
                         
                         <div class="box-footer">
-                          <form action="#" method="post">
+                          <form action="#" method="post" onsubmit="return false;">
                           <?php
                           $sql5 = "SELECT * FROM users WHERE id_user='$_SESSION[id_user]'";
                               $result5 = $conn->query($sql5);

@@ -251,7 +251,7 @@ $_SESSION['callFrom'] = "index.php";
                         <?php } ?>
                         <!-- /.box-footer -->
                         <div class="box-footer">
-                          <form action="#" method="post">
+                          <form action="#" method="post" onsubmit="return false;">
                           <?php
                               if($profileimage != "") {
                                 echo '<img class="img-responsive img-circle img-sm" src="uploads/profile/'.$profileimage.'" alt="Photo">';

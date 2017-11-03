@@ -1,4 +1,4 @@
-  <header class="main-header">
+  <header id="header" class="main-header">
 
     <!-- Logo -->
     <a href="index2.html" class="logo">
@@ -7,6 +7,18 @@
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Social </b>Network</span>
     </a>
+
+    <?php
+
+    $sql = "SELECT id_from, COUNT(id_from) as total FROM messages WHERE id_to='$_SESSION[id_user]' AND viewed='0' GROUP BY id_from";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0) {
+      $totalUnreadMessages =  $result->num_rows;
+    } else {
+      $totalUnreadMessages = 0;
+    }
+
+    ?>
 
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -17,136 +29,41 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        AdminLTE Design Team
-                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Developers
-                        <small><i class="fa fa-clock-o"></i> Today</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Sales Department
-                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <?php 
-                        $sql = "SELECT * FROM users WHERE id_user='$_SESSION[id_user]'";
-                        $result = $conn->query($sql);
-                        if($result->num_rows > 0) {
-                          $row = $result->fetch_assoc();
-                          if($row['profileimage'] != '') {
-                             $profileimage = $row['profileimage'];
-                            echo '<img src="uploads/profile/'.$row['profileimage'].'" class="img-circle" alt="User Image">';
-                          } else {
-                            echo '<img src="dist/img/avatar5.png" class="img-circle" alt="User Image">';
-                          }
-                        }
-                        ?>
-                      </div>
-                      <h4>
-                        Reviewers
-                        <small><i class="fa fa-clock-o"></i> 2 days</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- Notifications: style can be found in dropdown.less -->
+                   <!-- Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <?php if($totalUnreadMessages > 0) { ?>
+              <span class="label label-warning"><?php echo $totalUnreadMessages; ?></span>
+              <?php } ?>
             </a>
+            <?php if($totalUnreadMessages > 0) { ?>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">You have <?php echo $totalUnreadMessages; ?> notifications</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
+                  <?php
+                  while($row = $result->fetch_assoc()) {
+                    $sqlUser = "SELECT name FROM users WHERE id_user='$row[id_from]'";
+                    $resultUser = $conn->query($sqlUser);
+                    $rowName = $resultUser->fetch_assoc();
+                  ?>
+
                   <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    <a href="messages.php?id=<?php echo $row['id_from']; ?>" style="white-space: inherit;">
+                      <i class="fa fa-user text-red"></i> You have <?php echo $row['total']; ?> unread message(s) from <?php echo $rowName['name']; ?>
                     </a>
                   </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                  </li>
+                  <?php } ?>
                 </ul>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
             </ul>
+            <?php } else { ?>
+            <ul class="dropdown-menu">
+              <li class="header">You have 0 notifications</li>
+            </ul>
+            <?php } ?>
           </li>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">

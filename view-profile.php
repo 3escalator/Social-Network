@@ -36,6 +36,7 @@ if($result->num_rows > 0) {
     $country = $row['country'];
     $skills= $row['skills'];
     $aboutme = $row['aboutme'];
+    $profileimage = $row['profileimage'];
    
   }
 }
